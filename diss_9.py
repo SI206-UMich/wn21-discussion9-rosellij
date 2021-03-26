@@ -6,17 +6,25 @@ import unittest
 # Task 1: Get the URL that links to the Pokemon Charmander's webpage.
 # HINT: You will have to add https://pokemondb.net to the URL retrieved using BeautifulSoup
 def getCharmanderLink(soup):
-    pass
+
+    workingtag = soup.find('a', class_ = 'ent_name', string = 'Charmander')
+    working_link = 'https://pokemondb.net' + workingtag['href'] 
+    return working_link
 
 # Task 2: Get the details from the box below "Egg moves". Get all the move names and store
 #         them into a list. The function should return that list of moves.
 def getEggMoves(pokemon):
-    url = 'https://pokemondb.net/pokedex/'+pokemon
-    #add code here
+    url = 'https://pokemondb.net/pokedex/' + pokemon.lower() + '/egg'
+    workingsoup = BeautifulSoup(requests.get(url).text, 'html.parser')
+    workinggrid = workingsoup.find('ul', class_ = None)
+    moveslist = workinggrid.find_all('a')
+    newmoveslist = [anyentry.text for anyentry in moveslist]
+    return(newmoveslist)
 
 # Task 3: Create a regex expression that will find all the times that have these formats: @2pm @5 pm @10am
 # Return a list of these times without the '@' symbol. E.g. ['2pm', '5 pm', '10am']
 def findLetters(sentences):
+
     # initialize an empty list
     
 
@@ -40,8 +48,8 @@ def main():
     url = 'https://pokemondb.net/pokedex/national'
     r = requests.get(url)
     soup = BeautifulSoup(r.text, 'html.parser')
-    getCharmanderLink(soup)
-    getEggMoves('scizor')
+    #getCharmanderLink(soup)
+    #getEggMoves('scizor')
 
 class TestAllMethods(unittest.TestCase):
     def setUp(self):
