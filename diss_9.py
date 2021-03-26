@@ -5,9 +5,8 @@ import unittest
 
 # Task 1: Get the URL that links to the Pokemon Charmander's webpage.
 # HINT: You will have to add https://pokemondb.net to the URL retrieved using BeautifulSoup
-def getCharmanderLink(soup):
-
-    workingtag = soup.find('a', class_ = 'ent_name', string = 'Charmander')
+def getCharmanderLink(soup): # works!
+    workingtag = soup.find('a', class_ = 'ent-name', string = 'Charmander')
     working_link = 'https://pokemondb.net' + workingtag['href'] 
     return working_link
 
@@ -25,31 +24,14 @@ def getEggMoves(pokemon):
 # Return a list of these times without the '@' symbol. E.g. ['2pm', '5 pm', '10am']
 def findLetters(sentences):
 
-    # initialize an empty list
-    
-
-    # define the regular expression
-    
-
-    # loop through each sentence or phrase in sentences
-    
-
-    # find all the words that match the regular expression in each sentence
-       
-
-    # loop through the found words and add the words to your empty list
-
-
-    #return the list of the last letter of all words that begin or end with a capital letter
-
-
+    return re.findall(r'@(\d{1,2} ?[PpAa][Mm])', ' '.join(sentences))
 
 def main():
     url = 'https://pokemondb.net/pokedex/national'
     r = requests.get(url)
     soup = BeautifulSoup(r.text, 'html.parser')
-    #getCharmanderLink(soup)
-    #getEggMoves('scizor')
+    getCharmanderLink(soup)
+    getEggMoves('scizor')
 
 class TestAllMethods(unittest.TestCase):
     def setUp(self):
